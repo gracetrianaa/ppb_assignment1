@@ -18,11 +18,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void updateTask({required String taskId, required TaskModel updatedTask}) {
+  void updateTask({required String taskId, required String newTitle, required bool isCompleted}) {
     final taskIndex = tasksList.indexWhere((task) => task.id == taskId);
-    setState(() {
-      tasksList[taskIndex] = updatedTask;
-    });
+    if (taskIndex != -1) {
+      setState(() {
+        tasksList[taskIndex] = TaskModel(
+          id: taskId,
+          title: newTitle,
+          isCompleted: isCompleted,
+        );
+      });
+    }
   }
 
   void deleteTask({required String taskId}) {
@@ -32,6 +38,60 @@ class _HomePageState extends State<HomePage> {
   }
 
   final TextEditingController taskTextEditingController = TextEditingController();
+
+  void showEditDialog(TaskModel task) {
+    final TextEditingController editController = TextEditingController(text: task.title);
+    bool isCompleted = task.isCompleted;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Edit Task'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: editController,
+                    decoration: const InputDecoration(
+                        labelText: 'Edit Task Title'),
+                  ),
+                  CheckboxListTile(
+                    title: const Text('Mark as Completed'),
+                    value: isCompleted,
+                    onChanged: (value) {
+                      setState(() {
+                        isCompleted = value!;
+                      });
+                    },
+                  )
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    updateTask(
+                      taskId: task.id,
+                      newTitle: editController.text,
+                      isCompleted: isCompleted,
+                    );
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
+            );
+          }
+        );
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,22 +123,20 @@ class _HomePageState extends State<HomePage> {
                     final TaskModel task = tasksList[index];
 
                     return ListTile(
-                      leading: Transform.scale(
-                        scale: 2.0,
-                        child: Checkbox(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          value: task.isCompleted,
-                          onChanged: (isChecked) {
-                            final TaskModel updatedTask = task;
-                            updatedTask.isCompleted = isChecked!;
-                            updateTask(
-                              taskId: updatedTask.id,
-                              updatedTask: updatedTask,
-                            );
-                          },
+                      onTap: () => showEditDialog(task),
+
+                      leading: Checkbox(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
                         ),
+                        value: task.isCompleted,
+                        onChanged: (isChecked) {
+                          updateTask(
+                            taskId: task.id,
+                            newTitle: task.title,
+                            isCompleted: isChecked!,
+                          );
+                        },
                       ),
                       title: Text(
                         task.title, style: TextStyle(
