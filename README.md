@@ -1,6 +1,6 @@
 # todolist application
 
-Source: [Flutter Projects for Beginners #02: Building a To-Do List] (https://medium.com/@frojho/flutter-projects-for-beginners-02-building-a-to-do-list-790acb8720d9)
+Source: (Flutter Projects for Beginners #02: Building a To-Do List) [https://medium.com/@frojho/flutter-projects-for-beginners-02-building-a-to-do-list-790acb8720d9]
 
 Aplikasi To Do List sederhana dengan fitur add, edit, dan delete pada setiap Task.
 
