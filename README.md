@@ -1,16 +1,9 @@
-# taskweekfour_todolist
+# todolist application
 
-A new Flutter project.
+Source: [Flutter Projects for Beginners #02: Building a To-Do List] (https://medium.com/@frojho/flutter-projects-for-beginners-02-building-a-to-do-list-790acb8720d9)
 
-## Getting Started
+Aplikasi To Do List sederhana dengan fitur add, edit, dan delete pada setiap Task.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Modifikasi
+- On Tap untuk melakukan edit task
+- Pada Fungsi Edit, ditambahkan Dialog Edit untuk mengganti title dan 'mark as completed' pada setiap Task (semula hanya line through)
